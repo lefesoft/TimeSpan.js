@@ -11,7 +11,6 @@ require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
 var vows = require('vows'),
     fs = require('fs'),
     path = require('path'),
-    eyes = require('eyes'),
     assert = require('assert'),
     timeSpan = require('time-span');
     
