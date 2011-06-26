@@ -60,7 +60,7 @@ vows.describe('time-span').addBatch({
         assert.equal(12, timeSpan.fromDates(start, end).hours);
       },
       "with two string values": function () {
-        assert.equal(2, timeSpan.fromDates('NOW-2DAYS', 'NOW-4DAYS').days);
+        assert.equal(2, timeSpan.fromDates('NOW-4DAYS', 'NOW-2DAYS').days);
       }
     },
     "the factory methods": helpers.testFactories(10)

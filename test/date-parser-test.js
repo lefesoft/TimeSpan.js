@@ -30,6 +30,14 @@ vows.describe('time-span/date-time').addBatch({
             assert.equal(target.toString(), parsed.toString());
           }
         },
+        "which carry under a leap year": {
+          "should return the correct value": function () {
+            var target = new Date(Date.parse('2007-03-31T12:00:00Z')),
+                parsed = timeSpan.parseDate('2010-03-31T12:00:00Z-1096DAYS');
+
+            assert.equal(target.toString(), parsed.toString());
+          }
+        },
         "which carry over": {
           "should return the correct value": function () {
             var target = new Date(Date.parse('2013-04-03T12:34:15Z')),
