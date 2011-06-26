@@ -6,13 +6,10 @@
  *
  */
 
-require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
-
 var vows = require('vows'),
-    fs = require('fs'),
-    path = require('path'),
     assert = require('assert'),
-    timeSpan = require('time-span');
+    timeSpan = require('../lib/time-span'),
+    helpers = require('./helpers');
     
 vows.describe('time-span').addBatch({
   "When using the TimeSpan module": {
@@ -54,53 +51,18 @@ vows.describe('time-span').addBatch({
         }
       }
     },
-    "the parseDate() method": {
-      "when passed a TimeSpan string using ISO8601 with explicit time modifiers": {
-        "which do not carry over": {
-          "should return the correct value": function () {
-            var target = new Date(Date.parse('2010-04-03T10:04:15Z')),
-                parsed = timeSpan.parseDate('2010-04-03T12:34:15Z-2HOURS30MINUTES');
-
-            assert.equal(target.toString(), parsed.toString());
-          }
-        },
-        "which carry under": {
-          "should return the correct value": function () {
-            var target = new Date(Date.parse('2010-03-29T12:34:15Z')),
-                parsed = timeSpan.parseDate('2010-04-01T12:34:15Z-72HOURS');
-
-            assert.equal(target.toString(), parsed.toString());
-          }
-        },
-        "which carry over": {
-          "should return the correct value": function () {
-            var target = new Date(Date.parse('2013-04-03T12:34:15Z')),
-                parsed = timeSpan.parseDate('2010-04-03T12:34:15Z+2YEARS365DAYS');
-
-            assert.equal(target.toString(), parsed.toString());
-          }
-        }
-      },
-      "when passed a TimeSpan string using NOW with explicit time modifiers": {
-        "which do not carry over": {
-          "should return the correct value": function () {
-            var now = new Date(Date.now()),
-                parsed = timeSpan.parseDate('NOW-2HOURS');
+    "the fromDates() method": {
+      "with two Date values": function () {
+        var diff = 1000 * 60 * 60 * 12,
+            end = new Date(),
+            start = new Date(end.getTime() - diff);
             
-            now.setHours(now.getHours() - 2 - (now.getTimezoneOffset() / 60));
-            assert.equal(now.getHours(), parsed.getHours());
-          }
-        },
-        "which carry under": {
-          "should return the correct value": function () {
-            var now = new Date(Date.now()),
-                parsed = timeSpan.parseDate('NOW-72HOURS');
-
-            now.setHours(now.getHours() - 72 - (now.getTimezoneOffset() / 60));
-            assert.equal(now.getHours(), parsed.getHours());
-          }
-        }
+        assert.equal(12, timeSpan.fromDates(start, end).hours);
+      },
+      "with two string values": function () {
+        assert.equal(2, timeSpan.fromDates('NOW-2DAYS', 'NOW-4DAYS').days);
       }
-    }
+    },
+    "the factory methods": helpers.testFactories(10)
   }
 }).export(module);
