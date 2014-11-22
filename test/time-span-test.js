@@ -63,6 +63,6 @@ vows.describe('time-span').addBatch({
         assert.equal(2, timeSpan.fromDates('NOW-4DAYS', 'NOW-2DAYS').days);
       }
     },
-    "the factory methods": helpers.testFactories(10)
+    "the factory methods": helpers.testFactories([0, 10])
   }
 }).export(module);
