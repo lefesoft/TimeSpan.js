@@ -20,15 +20,18 @@ var helpers = exports,
 // Tests all of the factory methods for the `TimeSpan` object:
 // `fromMilliseconds`, `fromSeconds`, etc.
 //
-exports.testFactories = function (num) {
+exports.testFactories = function (nums) {
   var context = {};
   
   components.forEach(function (component) {
     var method = 'from' + capitalize(component);
-    
+
     context['the ' + method + '() method'] = function () {
-      var value = timeSpan[method](num);
-      assert.equal(value[component], num);
+
+      nums.forEach(function (num) {
+        var value = timeSpan[method](num);
+        assert.equal(value[component], num);
+      });
     }
   });
   
