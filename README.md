@@ -42,28 +42,28 @@ The constructor takes 5 parameters, all which are optional and which can be used
 You can initialize a new TimeSpan by calling one of these Functions:
 
 ``` js
-  timespan.FromSeconds(/* seconds */);
-  timespan.FromMinutes(/* minutes */);
-  timespan.FromHours(/* hours */);
-  timespan.FromDays(/* hours */);
+  timespan.fromSeconds(/* seconds */);
+  timespan.fromMinutes(/* minutes */);
+  timespan.fromHours(/* hours */);
+  timespan.fromDays(/* hours */);
     
   //
   // This behaves differently, see below
   //
-  timespan.FromDates(start, end);
+  timespan.fromDates(start, end);
 ```
 
-The first four helper methods take a single numeric parameter and create a new TimeSpan instance. e.g. `timespan.FromSeconds(45)` is equivalent to `new TimeSpan(0,45)`. If the parameter is invalid/not a number, it will just be treated as 0 no error will be thrown.
+The first four helper methods take a single numeric parameter and create a new TimeSpan instance. e.g. `timespan.fromSeconds(45)` is equivalent to `new TimeSpan(0,45)`. If the parameter is invalid/not a number, it will just be treated as 0 no error will be thrown.
 
-`timespan.FromDates()` is different as it takes two dates. The TimeSpan will be the difference between these dates.
+`timespan.fromDates()` is different as it takes two dates. The TimeSpan will be the difference between these dates.
 
 If the second date is earlier than the first date, the TimeSpan will have a negative value. You can pass in "true" as the third parameter to force the TimeSpan to be positive always.
 
 ``` js
   var date1 = new Date(2010, 3, 1, 10, 10, 5, 0);
   var date2 = new Date(2010, 3, 1, 10, 10, 10, 0);
-  var ts = TimeSpan.FromDates(date2, date1);
-  var ts2 = TimeSpan.FromDates(date2, date1, true);
+  var ts = TimeSpan.fromDates(date2, date1);
+  var ts2 = TimeSpan.fromDates(date2, date1, true);
   
   //
   // -5, because we put the later date first
@@ -120,8 +120,8 @@ These are the functions that interact with another TimeSpan:
 add and subtract add/subtract the other TimeSpan to the current one:
 
 ``` js
-  var ts = TimeSpan.FromSeconds(30);
-  var ts2 = TimeSpan.FromMinutes(2);
+  var ts = TimeSpan.fromSeconds(30);
+  var ts2 = TimeSpan.fromMinutes(2);
   ts.add(ts2);
   
   //
@@ -133,8 +133,8 @@ add and subtract add/subtract the other TimeSpan to the current one:
 equals checks if two TimeSpans have the same time:
 
 ``` js
-  var ts = TimeSpan.FromSeconds(30);
-  var ts2 = TimeSpan.FromSeconds(30);
+  var ts = TimeSpan.fromSeconds(30);
+  var ts2 = TimeSpan.fromSeconds(30);
   var eq = ts.equals(ts2); // true
   ts2.addSeconds(1);
   var eq2 = ts.equals(ts2); // false
@@ -176,7 +176,7 @@ These functions convert the value to the given format and return it. The result 
 These functions return a component of the TimeSpan that could be used to represent a clock. 
 
 ``` js
-  var ts = TimeSpan.FromSeconds(90);
+  var ts = TimeSpan.fromSeconds(90);
   console.log(ts.seconds()); // 30
   console.log(ts.minutes()); // 1
 ```
@@ -184,7 +184,7 @@ These functions return a component of the TimeSpan that could be used to represe
 Basically these value never "overflow" - seconds will only return 0 to 59, hours only 0 to 23 etc. Days could grow infinitely. All of these functions automatically round down the result:
 
 ``` js
-  var ts = TimeSpan.FromDays(2);
+  var ts = TimeSpan.fromDays(2);
   ts.addHours(12);
   console.log(ts.days());  // 2
   console.log(ts.hours()); // 12
