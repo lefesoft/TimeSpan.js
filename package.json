@@ -16,5 +16,6 @@
   },
   "main": "./lib/time-span.js",
   "scripts": { "test": "vows test/*-test.js --spec" },
-  "engines": { "node": ">= 0.2.0" }
+  "engines": { "node": ">= 0.2.0" },
+  "types": "./index.d.ts"
 }
